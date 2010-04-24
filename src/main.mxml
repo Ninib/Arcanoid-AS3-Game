@@ -1,4 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-	
+<mx:Application 
+    xmlns:mx="http://www.adobe.com/2006/mxml" 
+    layout="absolute" 
+    width="800" 
+    height="600" 
+    xmlns:menu="lol.wut.menu.*" 
+    creationComplete="onCreationComplete()">
+    
+    <mx:Script>
+    <![CDATA[
+        import lol.wut.events.GameEvent;
+        import lol.wut.game.ArcanoidGame;
+        import mx.events.CloseEvent;
+        import mx.controls.Alert;
+        import lol.wut.game.IGame;
+        import lol.wut.events.MenuEvent;
+        
+        private var _currentGame:IGame;
+        
+        private function onCreationComplete():void
+        {
+            initMenu();
+        }
+        
+        private function initMenu():void
+        {
+            menu.addEventListener(MenuEvent.NEW_GAME, onNewGame, false, 0, true);
+            menu.visible = true;    
+        }
+        
+        private function onNewGame(event:Event):void
+        {
+            if (null != _currentGame)
+            {
+                newGameWarning();
+            } 
+            else 
+            {
+                startNewGame();
+            }
+        }
+        
+        private function newGameWarning():void
+        {
+            var title:String = 'New Game';
+            var msg:String = 'Do you realy want to start new game? Your current game will be lost.';
+            Alert.show(msg, title, Alert.OK | Alert.CANCEL, this, onNewGameWarningClose, null, Alert.CANCEL);
+        }
+        
+        private function onNewGameWarningClose(event:CloseEvent):void
+        {
+            if (Alert.OK == event.detail)
+            {
+                _currentGame.removeEventListener(GameEvent.LEVEL_COMPLETE, onLevelComplete);
+                _currentGame.stopAndDispose();
+                startNewGame();
+            }
+        }
+        
+        private function startNewGame():void
+        {
+            _currentGame = new ArcanoidGame();
+            _currentGame.addEventListener(GameEvent.LEVEL_COMPLETE, onLevelComplete, 
+               false, 0, true);
+           addChild(_currentGame.view);
+           menu.visible = false;
+        }
+        
+        private function onLevelComplete(event:GameEvent):void
+        {
+            
+        }
+    ]]>
+    </mx:Script>
+    
+    <menu:menu id="menu" x="0" y="0" visible="false" />
 </mx:Application>
