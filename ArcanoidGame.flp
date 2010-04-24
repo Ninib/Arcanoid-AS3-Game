@@ -1,0 +1,12 @@
+﻿<flash_project name="ArcanoidGame" version="1">
+    <project_folder name="src" expanded="true">
+        <project_folder name="lol" expanded="true">
+            <project_folder name="wut" expanded="true">
+                <project_folder name="core" expanded="true">
+                    <project_file path="./src/lol/wut/core/main.as" filetype="as" />
+                </project_folder>
+            </project_folder>
+        </project_folder>
+        <project_file path="./src/main.fla" filetype="fla" profile="" />
+    </project_folder>
+</flash_project>
