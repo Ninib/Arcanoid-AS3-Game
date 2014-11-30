@@ -15,7 +15,7 @@ package com.tcc.utils
         
         public function getString(str:String):String
         {
-            var rer:String = ResourceManager.getInstance().getString(rb.bundleName, str);
+            var ret:String = ResourceManager.getInstance().getString(rb.bundleName, str);
             return ret;
         }
         public static function get locale():ILocale
